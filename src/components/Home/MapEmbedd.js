@@ -36,7 +36,7 @@ const MapEmbedd = (props) => {
                   strokeColor: 'black',
                   strokeWeight: 1,
                   fillOpacity: 0.5,
-                  scale: 2,
+                  scale: 4,
                 }}
                 position={{
                   lat: sati[0],
@@ -60,7 +60,7 @@ const MapEmbedd = (props) => {
                 strokeColor: markerColor[shipsData['Vessel Filter'][shipid]],
                 // scaledSize: new window.google.maps.Size(500, 500),
                 strokeWeight: 1,
-                scale: 2,
+                scale: 4,
                 rotation: Number(
                   shipsData['Course'][shipid].slice(
                     0,
