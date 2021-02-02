@@ -46,8 +46,8 @@ const MapEmbedd = (props) => {
                 key={index}
                 icon={{
                   path: google.maps.SymbolPath.CIRCLE,
-                  fillColor: 'black',
-                  strokeColor: 'black',
+                  fillColor: 'yellow',
+                  strokeColor: 'yellow',
                   strokeWeight: 1,
                   fillOpacity: 0.5,
                   scale: 4,
