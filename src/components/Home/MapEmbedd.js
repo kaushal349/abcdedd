@@ -45,6 +45,7 @@ const MapEmbedd = (props) => {
               />
             );
           })}
+
         {ShipsID.map((shipid, index) => {
           return (
             <Marker
@@ -72,7 +73,16 @@ const MapEmbedd = (props) => {
                 lat: shipsData['Latitude'][shipid],
                 lng: shipsData['Longitude'][shipid],
               }}
-            />
+            >
+              {/* <InfoWindow visible={showInfoWindow} style={styles.infoWindow}>
+                <div className={classes.infoWindow}>
+                  <p>
+                    Click on the map or drag the marker to select location where
+                    the incident occurred
+                  </p>
+                </div>
+              </InfoWindow> */}
+            </Marker>
           );
         })}
       </Map>

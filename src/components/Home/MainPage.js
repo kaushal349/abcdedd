@@ -3,7 +3,7 @@ import MapEmbedd from './MapEmbedd';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import DashboardMain from '../Dashboard/DashboardMain';
 import alertDetail from '../Dashboard/alertDetail';
-import DisplayShip from '../Dashboard/displayShip';
+import displayShip from '../Dashboard/displayShip';
 import { useHistory } from 'react-router-dom';
 
 const MainPage = () => {
@@ -55,7 +55,7 @@ const MainPage = () => {
               <Route
                 exact
                 path='/shipdetails/:shipid'
-                component={DisplayShip}
+                component={displayShip}
               />
             </Switch>
           </Router>
