@@ -1,9 +1,23 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
+import { Map, Marker, GoogleApiWrapper, InfoWindow } from 'google-maps-react';
 import { ShipsID } from '../../extras/ShipsId';
 
 const MapEmbedd = (props) => {
+  const [formData, setFormData] = useState({
+    showingInfoWindow: false,
+    activeMarker: {},
+  });
+
+  const { showingInfoWindow, activeMarker } = formData;
+
+  const onMouseHover = (props, marker, e) =>
+    setFormData({
+      ...formData,
+      activeMarker: marker,
+      showingInfoWindow: true,
+    });
+
   const history = useHistory();
   const google = window.google;
   let shipsData = require('../../JsonData/final_AIS_data.json');
@@ -54,6 +68,7 @@ const MapEmbedd = (props) => {
                 history.push(`/shipdetails/${shipid}`);
                 window.location.reload(false);
               }}
+              // onMouseover={onMouseHover}
               icon={{
                 path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
                 fillColor: markerColor[shipsData['Vessel Filter'][shipid]],
@@ -74,14 +89,11 @@ const MapEmbedd = (props) => {
                 lng: shipsData['Longitude'][shipid],
               }}
             >
-              {/* <InfoWindow visible={showInfoWindow} style={styles.infoWindow}>
-                <div className={classes.infoWindow}>
-                  <p>
-                    Click on the map or drag the marker to select location where
-                    the incident occurred
-                  </p>
+              <InfoWindow marker={activeMarker} visible={showingInfoWindow}>
+                <div>
+                  <h1>Hello</h1>
                 </div>
-              </InfoWindow> */}
+              </InfoWindow>
             </Marker>
           );
         })}

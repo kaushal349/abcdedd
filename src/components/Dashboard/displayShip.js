@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 
 const DisplayShip = (props) => {
   let shipsData = require('../../JsonData/final_AIS_data.json');
+  let shipsImages = require('../../JsonData/mmsi_image');
   const shipid = props.match.params.shipid;
   const history = useHistory();
 
@@ -25,11 +26,19 @@ const DisplayShip = (props) => {
         </Navbar.Brand>
       </Navbar>
 
-      <Card style={{ width: '18rem' }}>
+      <Card style={{ width: '18rem', marginLeft: '15%', marginTop: '5%' }}>
         <Card.Body>
           {console.log(shipsData['Vessel Name'])}
           <Card.Title>{shipsData['Vessel Name'][shipid]}</Card.Title>
           <Card.Text>
+            <div style={{ height: '20em' }}>
+              <img
+                src={shipsImages['Image URL'][shipsData['MMSI'][shipid]]}
+                height='100%'
+                width='100%'
+              />
+            </div>
+            <br />
             <h6>Course: {shipsData['Course'][shipid]}</h6>
             <h6>Speed: (Kn) {shipsData['Speed (Kn)'][shipid]}</h6>
             <h6>Current Draught: {shipsData['Current Draught'][shipid]}</h6>
