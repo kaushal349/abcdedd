@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { Component, useState } from 'react';
-import { Card } from 'react-bootstrap';
-import { Navbar } from 'react-bootstrap';
+import { Card, Navbar, Modal, Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 
 const DisplayShip = (props) => {
@@ -10,6 +9,41 @@ const DisplayShip = (props) => {
   const shipid = props.match.params.shipid;
   const history = useHistory();
   const [status, setStatus] = useState(null);
+  const [markThreatStatus, setMarkThreatStatus] = useState(false);
+  const [removeThreatStatus, setRemoveThreatStatus] = useState(false);
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const removeThreat = async () => {
+    const body = {
+      lat: shipsData['Latitude'][shipid],
+      long: shipsData['Longitude'][shipid],
+    };
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    try {
+      setRemoveThreatStatus(true);
+      const res = await axios.post(
+        `https://django-marine.herokuapp.com/location/delete_custom/`,
+        body,
+        config
+      );
+      setStatus('Threat removed successfully');
+      setRemoveThreatStatus(false);
+    } catch (error) {
+      setStatus('Threat does not exists');
+      setRemoveThreatStatus(false);
+    }
+    handleShow();
+    setTimeout(function () {
+      handleClose();
+    }, 2000);
+  };
 
   const markThreat = async () => {
     const body = {
@@ -21,13 +55,23 @@ const DisplayShip = (props) => {
         'Content-Type': 'application/json',
       },
     };
-    const res = await axios.post(
-      `https://django-marine.herokuapp.com/location/`,
-      body,
-      config
-    );
-    console.log('res obtained');
-    console.log(res);
+    try {
+      setMarkThreatStatus(true);
+      const res = await axios.post(
+        `https://django-marine.herokuapp.com/location/`,
+        body,
+        config
+      );
+      setStatus('Threat marked successfully');
+      setMarkThreatStatus(false);
+    } catch (error) {
+      setStatus('Threat already marked');
+      setMarkThreatStatus(false);
+    }
+    handleShow();
+    setTimeout(function () {
+      handleClose();
+    }, 2000);
   };
 
   const navigateMap = () => {
@@ -55,6 +99,18 @@ const DisplayShip = (props) => {
           Vessel Details
         </Navbar.Brand>
       </Navbar>
+
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Status</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{status}</Modal.Body>
+        <Modal.Footer>
+          <Button variant='secondary' onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
       <Card
         style={{
@@ -89,13 +145,14 @@ const DisplayShip = (props) => {
           </Card.Text>
         </Card.Body>
         <button className='btn btn-danger mx-4 mb-2' onClick={markThreat}>
-          Mark as threat
+          {markThreatStatus ? `Working....` : 'Mark as threat'}
         </button>
-        <button className='btn btn-success mx-4 mb-2'>Remove as threat</button>
+        <button className='btn btn-success mx-4 mb-2' onClick={removeThreat}>
+          {removeThreatStatus ? 'Working...' : 'Remove as threat'}
+        </button>
         <button className='btn btn-info mx-4 mb-2' onClick={navigateMap}>
           Show satellite feed
         </button>
-        {status}
       </Card>
     </div>
   );

@@ -12,7 +12,12 @@ const MainPage = () => {
   const [activeZoom, setActiveZoom] = useState(10);
   const [initLat, setInitLat] = useState(1.30415);
   const [intiLng, setInitLng] = useState(103.86066);
+  const [altState, setAltState] = useState(true);
 
+  const rerenderDashbaord = () => {
+    console.log('inside re redner');
+    setAltState(!altState);
+  };
   const resetMap = () => {
     setActiveZoom(10);
     setInitLat(1.30415);
@@ -66,6 +71,7 @@ const MainPage = () => {
             activeZoom={activeZoom}
             intiLng={intiLng}
             initLat={initLat}
+            rerenderDashbaord={rerenderDashbaord}
           />
         </div>
         <div
@@ -85,6 +91,7 @@ const MainPage = () => {
                     setLng={setLng}
                     setZoom={setZoom}
                     resetMap={resetMap}
+                    altState={altState}
                     {...props}
                   />
                 )}
@@ -98,6 +105,7 @@ const MainPage = () => {
                     setLng={setLng}
                     setZoom={setZoom}
                     resetMap={resetMap}
+                    altState={altState}
                     {...props}
                   />
                 )}

@@ -3,7 +3,13 @@ import { useHistory } from 'react-router-dom';
 import { Map, Marker, GoogleApiWrapper, InfoWindow } from 'google-maps-react';
 import { ShipsID } from '../../extras/ShipsId';
 
-const MapEmbedd = ({ satelliteFeed, activeZoom, intiLng, initLat }) => {
+const MapEmbedd = ({
+  satelliteFeed,
+  activeZoom,
+  intiLng,
+  initLat,
+  rerenderDashbaord,
+}) => {
   const [formData, setFormData] = useState({
     showingInfoWindow: false,
     activeMarker: {},
@@ -40,6 +46,7 @@ const MapEmbedd = ({ satelliteFeed, activeZoom, intiLng, initLat }) => {
                 onClick={() => {
                   history.push(`/shipdetails/${sati[0]}/${sati[1]}`);
                   window.location.reload(false);
+                  // rerenderDashbaord();
                 }}
                 icon={{
                   path: google.maps.SymbolPath.CIRCLE,
@@ -64,6 +71,7 @@ const MapEmbedd = ({ satelliteFeed, activeZoom, intiLng, initLat }) => {
               onClick={() => {
                 history.push(`/shipdetails/${shipid}`);
                 window.location.reload(false);
+                // rerenderDashbaord();
               }}
               // onMouseover={onMouseHover}
               icon={{
