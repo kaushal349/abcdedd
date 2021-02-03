@@ -115,7 +115,7 @@ const MapEmbedd = ({
                   // console.log(shipid);
                   history.push(`/shipdetails/${shipid}`);
                   updateTrackData();
-                  // window.location.reload(false);
+                  window.location.reload(false);
                   // rerenderDashbaord();
                 }}
                 // onMouseover={onMouseHover}
