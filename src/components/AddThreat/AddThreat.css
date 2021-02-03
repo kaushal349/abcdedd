@@ -1,0 +1,16 @@
+.parentdiv {
+    background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcThf16zxOPlhYPuLn32BhEpwCFQeUfqz4qAQA&usqp=CAU);
+    background-repeat: no-repeat;
+   background-size: cover;
+}
+
+.threatform {
+    display: block;
+    position: relative;
+    padding: 7%;
+    margin-top: 5%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 5%;
+  }
+  
