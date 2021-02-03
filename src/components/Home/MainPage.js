@@ -4,11 +4,12 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import DashboardMain from '../Dashboard/DashboardMain';
 import alertDetail from '../Dashboard/alertDetail';
 import DisplayShip from '../Dashboard/displayShip';
-import { useHistory } from 'react-router-dom';
+import { Form, Col, InputGroup, FormControl } from 'react-bootstrap';
 import DisplayUnknownShips from '../Dashboard/DisplayUnknownShips';
 
 const MainPage = () => {
   const [satelliteFeed, setSatelliteFeed] = useState(true);
+  const [threatFeed, setThreatFeed] = useState(false);
   const [activeZoom, setActiveZoom] = useState(10);
   const [initLat, setInitLat] = useState(1.30415);
   const [intiLng, setInitLng] = useState(103.86066);
@@ -46,28 +47,57 @@ const MainPage = () => {
     <div className='container-fluid m-0 p-0'>
       <div className='row'>
         <div className='col-lg-8 p-0'>
-          <div className='form-check pl-5 checkbox-lg bg-info d-flex align-items-center'>
-            <input
-              className='form-check-input'
-              type='checkbox'
-              style={{
-                height: '50px',
-              }}
-              id='flexCheckChecked'
-              checked={satelliteFeed}
-              onChange={() => {
-                setSatelliteFeed(!satelliteFeed);
-              }}
-            />
-            <label
-              className='form-check-label font-weight-bold text-white'
-              for='flexCheckChecked'
-            >
-              satellite
-            </label>
-          </div>
+          {/* <div className='pl-5 checkbox-lg bg-info d-flex align-items-center'> */}
+          {/* <div class='form-row pl-5 bg-info'>
+            <div class='form-group col-md-6 bg-danger mt-auto mb-auto'>
+              <input
+                className='form-check-input'
+                type='checkbox'
+                style={{
+                  height: '50px',
+                }}
+                checked={satelliteFeed}
+                onChange={() => {
+                  setSatelliteFeed(!satelliteFeed);
+                }}
+              />
+              <label className='form-check-label font-weight-bold text-white'>
+                satellite
+              </label>
+            </div> */}
+          {/* </div> */}
+          <Form>
+            <Form.Row className='align-items-center px-5 pt-2'>
+              <Col xs='auto'>
+                <Form.Check
+                  type='checkbox'
+                  id='autoSizingCheck'
+                  className='mb-2'
+                  label='Satellite feed'
+                  checked={satelliteFeed}
+                  onChange={() => {
+                    setSatelliteFeed(!satelliteFeed);
+                  }}
+                />
+              </Col>
+              <Col xs='auto' className='ml-4'>
+                <Form.Check
+                  type='checkbox'
+                  id='autoSizingCheck'
+                  className='mb-2'
+                  label='Threat feed'
+                  checked={threatFeed}
+                  onChange={() => {
+                    setThreatFeed(!threatFeed);
+                  }}
+                />
+              </Col>
+            </Form.Row>
+          </Form>
+
           <MapEmbedd
             satelliteFeed={satelliteFeed}
+            threatFeed={threatFeed}
             activeZoom={activeZoom}
             intiLng={intiLng}
             initLat={initLat}
