@@ -3,11 +3,30 @@ import MapEmbedd from './MapEmbedd';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import DashboardMain from '../Dashboard/DashboardMain';
 import alertDetail from '../Dashboard/alertDetail';
-import displayShip from '../Dashboard/displayShip';
+import DisplayShip from '../Dashboard/displayShip';
 import { useHistory } from 'react-router-dom';
+import DisplayUnknownShips from '../Dashboard/DisplayUnknownShips';
 
 const MainPage = () => {
   const [satelliteFeed, setSatelliteFeed] = useState(true);
+  const [activeZoom, setActiveZoom] = useState(10);
+  const [initLat, setInitLat] = useState(1.30415);
+  const [intiLng, setInitLng] = useState(103.86066);
+
+  const resetMap = () => {
+    setActiveZoom(10);
+    setInitLat(1.30415);
+    setInitLng(103.86066);
+  };
+  const setZoom = (val) => {
+    setActiveZoom(val);
+  };
+  const setLat = (val) => {
+    setInitLat(val);
+  };
+  const setLng = (val) => {
+    setInitLng(val);
+  };
   const [categoryStates, setCategoryStates] = useState({
     'Unspecified Ships': true,
     Fishing: true,
@@ -42,7 +61,12 @@ const MainPage = () => {
               satellite
             </label>
           </div>
-          <MapEmbedd satelliteFeed={satelliteFeed} />
+          <MapEmbedd
+            satelliteFeed={satelliteFeed}
+            activeZoom={activeZoom}
+            intiLng={intiLng}
+            initLat={initLat}
+          />
         </div>
         <div
           className='col-lg-4 p-0'
@@ -55,7 +79,28 @@ const MainPage = () => {
               <Route
                 exact
                 path='/shipdetails/:shipid'
-                component={displayShip}
+                render={(props) => (
+                  <DisplayShip
+                    setLat={setLat}
+                    setLng={setLng}
+                    setZoom={setZoom}
+                    resetMap={resetMap}
+                    {...props}
+                  />
+                )}
+              />
+              <Route
+                exact
+                path='/shipdetails/:lat/:lng'
+                render={(props) => (
+                  <DisplayUnknownShips
+                    setLat={setLat}
+                    setLng={setLng}
+                    setZoom={setZoom}
+                    resetMap={resetMap}
+                    {...props}
+                  />
+                )}
               />
             </Switch>
           </Router>

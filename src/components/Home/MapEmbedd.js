@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { Map, Marker, GoogleApiWrapper, InfoWindow } from 'google-maps-react';
 import { ShipsID } from '../../extras/ShipsId';
 
-const MapEmbedd = (props) => {
+const MapEmbedd = ({ satelliteFeed, activeZoom, intiLng, initLat }) => {
   const [formData, setFormData] = useState({
     showingInfoWindow: false,
     activeMarker: {},
@@ -11,39 +11,36 @@ const MapEmbedd = (props) => {
 
   const { showingInfoWindow, activeMarker } = formData;
 
-  const onMouseHover = (props, marker, e) =>
-    setFormData({
-      ...formData,
-      activeMarker: marker,
-      showingInfoWindow: true,
-    });
-
   const history = useHistory();
   const google = window.google;
   let shipsData = require('../../JsonData/final_AIS_data.json');
   let markerColor = require('../../JsonData/marker_color.json');
   let satData = require('../../JsonData/satelite_feed.json');
-
+  console.log(`reloaded active zoom ${activeZoom}`);
   return (
     <div>
       <Map
-        google={props.google}
+        google={google}
         mapType='satellite'
-        zoom={10}
+        zoom={activeZoom}
         onClick={() => console.log('map clicked')}
         initialCenter={{
-          lat: 1.30415,
-          lng: 103.86066,
+          lat: initLat,
+          lng: intiLng,
         }}
         style={{
           height: '800px',
         }}
       >
-        {props.satelliteFeed &&
+        {satelliteFeed &&
           satData.map((sati, index) => {
             return (
               <Marker
                 key={index}
+                onClick={() => {
+                  history.push(`/shipdetails/${sati[0]}/${sati[1]}`);
+                  window.location.reload(false);
+                }}
                 icon={{
                   path: google.maps.SymbolPath.CIRCLE,
                   fillColor: 'yellow',

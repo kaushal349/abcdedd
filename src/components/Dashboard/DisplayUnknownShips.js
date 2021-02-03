@@ -4,17 +4,19 @@ import { Card } from 'react-bootstrap';
 import { Navbar } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 
-const DisplayShip = (props) => {
+const DisplayUnknownShips = (props) => {
   let shipsData = require('../../JsonData/final_AIS_data.json');
   let shipsImages = require('../../JsonData/mmsi_image');
-  const shipid = props.match.params.shipid;
+  console.log(props.match.params);
+  const latProp = props.match.params['lat'];
+  const lngProp = props.match.params['lng'];
   const history = useHistory();
   const [status, setStatus] = useState(null);
 
   const markThreat = async () => {
     const body = {
-      lat: shipsData['Latitude'][shipid],
-      long: shipsData['Longitude'][shipid],
+      lat: 0,
+      long: 0,
     };
     const config = {
       headers: {
@@ -32,8 +34,8 @@ const DisplayShip = (props) => {
 
   const navigateMap = () => {
     props.setZoom(16);
-    props.setLat(shipsData['Latitude'][shipid]);
-    props.setLng(shipsData['Longitude'][shipid]);
+    props.setLat(latProp);
+    props.setLng(lngProp);
   };
 
   return (
@@ -66,26 +68,18 @@ const DisplayShip = (props) => {
       >
         <Card.Body>
           {/* {console.log(shipsData['Vessel Name'])} */}
-          <Card.Title className='font-weight-bold'>
-            {shipsData['Vessel Name'][shipid]}
-          </Card.Title>
+          <Card.Title className='font-weight-bold'>Unknown Ship</Card.Title>
           <Card.Text>
             <div style={{ height: '20em' }}>
               <img
-                src={shipsImages['Image URL'][shipsData['MMSI'][shipid]]}
+                src={shipsImages['Image URL'][shipsData['MMSI']['2111929']]}
                 height='100%'
                 width='100%'
               />
             </div>
             <br />
-            <h6>Course: {shipsData['Course'][shipid]}</h6>
-            <h6>Speed: (Kn) {shipsData['Speed (Kn)'][shipid]}</h6>
-            <h6>Current Draught: {shipsData['Current Draught'][shipid]}</h6>
-            <h6>GT: {shipsData['Gross Tonnage'][shipid]}</h6>
-            <h6>Built: {shipsData['Year of Built'][shipid]}</h6>
-            <h6>IMO number: {shipsData['IMO'][shipid]}</h6>
-            <h6>Length Overall: {shipsData['Length (m)'][shipid]}</h6>
-            <h6>Last Updated: {shipsData['Last Updated'][shipid]}</h6>
+            <h6>Latitude: {latProp}</h6>
+            <h6>Longitude: {lngProp}</h6>
           </Card.Text>
         </Card.Body>
         <button className='btn btn-danger mx-4 mb-2' onClick={markThreat}>
@@ -101,4 +95,4 @@ const DisplayShip = (props) => {
   );
 };
 
-export default DisplayShip;
+export default DisplayUnknownShips;
