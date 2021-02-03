@@ -20,28 +20,26 @@ const ImageDetection = () => {
       }
 
      return(
-        <div className='container'>
+        <div className='container-fluid vh-100' style={{  backgroundSize:'cover',backgroundRepeat:'no-repeat', backgroundImage:"url(https://img.pngio.com/ships-and-yacht-png-images-free-download-ship-png-ship-png-images-660_350.png)"}} >
             {console.log(value.submitted)}
             {value.submitted?
-                <div className='row'>
+                <div className='row' style={{opacity:1}}>
                     <div className='col-md-3'></div>
                     <div className='col-md-9'>
                         <Card style={{ width: '33rem',marginTop:'17%',textAlign:'center' }}>
-                            {/*<Card.Img variant="top" src="holder.js/100px180" />*/}
-                            <Card.Body>
+                            {/<Card.Img variant="top" src="holder.js/100px180" />/}
+                            <Card.Body >
                                 <Card.Title style={{color:'red',fontSize:'2em'}}>Upload Image of Ship</Card.Title>
                                 <br /><br />
                                 {/*<Card.Text>
                                 Some quick example text to build on the card title and make up the bulk of
                                 the card's content.
                                 </Card.Text>*/}
-                                <Form>
-                                    <Form.File 
-                                        id="custom-file-translate-scss"
-                                        label="Insert File"
-                                        lang="en"
-                                        custom
-                                    />
+                            
+                                <Form style={{marginLeft:'25%'}}> 
+                                    <Form.Group>
+                                        <Form.File id="exampleFormControlFile1" />
+                                    </Form.Group>
                                 </Form>
                                 <br />
                                 <Button variant="primary" onClick={() => handleSubmit()}>Submit</Button>
