@@ -11,6 +11,7 @@ const MapEmbedd = ({
   intiLng,
   initLat,
   rerenderDashbaord,
+  updateTrackData,
 }) => {
   const [formData, setFormData] = useState({
     showingInfoWindow: false,
@@ -68,6 +69,7 @@ const MapEmbedd = ({
                         : history.push(`/shipdetails/${sati[0]}/${sati[1]}`);
                     }
                     console.log(sati[3]);
+                    updateTrackData();
                     window.location.reload(false);
                     // rerenderDashbaord();
                   }}
@@ -85,6 +87,7 @@ const MapEmbedd = ({
                   key={index}
                   onClick={() => {
                     history.push(`/shipdetails/${sati[0]}/${sati[1]}`);
+                    updateTrackData();
                     window.location.reload(false);
                     // rerenderDashbaord();
                   }}
@@ -111,7 +114,8 @@ const MapEmbedd = ({
                 onClick={() => {
                   // console.log(shipid);
                   history.push(`/shipdetails/${shipid}`);
-                  window.location.reload(false);
+                  updateTrackData();
+                  // window.location.reload(false);
                   // rerenderDashbaord();
                 }}
                 // onMouseover={onMouseHover}

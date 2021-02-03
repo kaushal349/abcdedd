@@ -42,6 +42,7 @@ const DisplayShip = (props) => {
     handleShow();
     setTimeout(function () {
       handleClose();
+      window.location.reload(false);
     }, 2000);
   };
 
@@ -73,6 +74,7 @@ const DisplayShip = (props) => {
     handleShow();
     setTimeout(function () {
       handleClose();
+      window.location.reload(false);
     }, 2000);
   };
 

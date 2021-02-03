@@ -44,6 +44,7 @@ const DisplayUnknownShips = (props) => {
     handleShow();
     setTimeout(function () {
       handleClose();
+      window.location.reload(false);
     }, 2000);
   };
 
@@ -74,6 +75,7 @@ const DisplayUnknownShips = (props) => {
     handleShow();
     setTimeout(function () {
       handleClose();
+      window.location.reload(false);
     }, 2000);
   };
 

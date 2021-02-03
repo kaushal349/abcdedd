@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MapEmbedd from './MapEmbedd';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import DashboardMain from '../Dashboard/DashboardMain';
 import alertDetail from '../Dashboard/alertDetail';
 import DisplayShip from '../Dashboard/displayShip';
-import { Form, Col, InputGroup, FormControl } from 'react-bootstrap';
+import { Form, Col, Table } from 'react-bootstrap';
 import DisplayUnknownShips from '../Dashboard/DisplayUnknownShips';
 
 const MainPage = () => {
@@ -15,7 +15,18 @@ const MainPage = () => {
   const [intiLng, setInitLng] = useState(103.86066);
   const [altState, setAltState] = useState(true);
 
-  const rerenderDashbaord = () => {
+  const [trackData, setTrackData] = useState(null);
+
+  useEffect(() => {
+    updateTrackData();
+  }, []);
+
+  const updateTrackData = () => {
+    let tdata = require('../../JsonData/track.json');
+    setTrackData(tdata);
+  };
+
+  const rerenderMaps = () => {
     console.log('inside re redner');
     setAltState(!altState);
   };
@@ -47,25 +58,6 @@ const MainPage = () => {
     <div className='container-fluid m-0 p-0'>
       <div className='row'>
         <div className='col-lg-8 p-0'>
-          {/* <div className='pl-5 checkbox-lg bg-info d-flex align-items-center'> */}
-          {/* <div class='form-row pl-5 bg-info'>
-            <div class='form-group col-md-6 bg-danger mt-auto mb-auto'>
-              <input
-                className='form-check-input'
-                type='checkbox'
-                style={{
-                  height: '50px',
-                }}
-                checked={satelliteFeed}
-                onChange={() => {
-                  setSatelliteFeed(!satelliteFeed);
-                }}
-              />
-              <label className='form-check-label font-weight-bold text-white'>
-                satellite
-              </label>
-            </div> */}
-          {/* </div> */}
           <Form>
             <Form.Row className='align-items-center px-5 pt-2 bg-dark'>
               <Col xs='auto'>
@@ -109,7 +101,8 @@ const MainPage = () => {
             activeZoom={activeZoom}
             intiLng={intiLng}
             initLat={initLat}
-            rerenderDashbaord={rerenderDashbaord}
+            altState={altState}
+            updateTrackData={updateTrackData}
           />
         </div>
         <div
@@ -129,7 +122,7 @@ const MainPage = () => {
                     setLng={setLng}
                     setZoom={setZoom}
                     resetMap={resetMap}
-                    altState={altState}
+                    rerenderMaps={rerenderMaps}
                     {...props}
                   />
                 )}
@@ -143,7 +136,7 @@ const MainPage = () => {
                     setLng={setLng}
                     setZoom={setZoom}
                     resetMap={resetMap}
-                    altState={altState}
+                    rerenderMaps={rerenderMaps}
                     {...props}
                   />
                 )}
@@ -152,6 +145,37 @@ const MainPage = () => {
           </Router>
         </div>
       </div>
+
+      {trackData && (
+        <div className='col mt-4 py-5 px-4'>
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Time</th>
+                <th>Event</th>
+                <th>dest</th>
+                <th>Speed</th>
+                <th>Course</th>
+              </tr>
+            </thead>
+            <tbody>
+              {trackData.map((el, idx) => {
+                return (
+                  <tr>
+                    <td>{idx + 1}</td>
+                    <td>{el['time']}</td>
+                    <td>{el['event']}</td>
+                    <td>{el['dest']}</td>
+                    <td>{el['speed']}</td>
+                    <td>{el['course']}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        </div>
+      )}
     </div>
   );
 };
