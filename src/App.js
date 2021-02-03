@@ -11,12 +11,12 @@ function App() {
     <div className='m-0 p-0 '>
       <Router>
         <NavBar />
-        <MainPage />
-        <ImageDetection />
+        {/* <MainPage />
+        <ImageDetection /> */}
         <Switch>
-          {/* <Route exact path='/' component={MainPage} />
           <Route exact path='/imagedetection' component={ImageDetection} />
-          <Route exact path='/addthreat' component={AddThreat} /> */}
+          <Route exact path='/addthreat' component={AddThreat} />
+          <Route path='/' component={MainPage} />
         </Switch>
       </Router>
     </div>
