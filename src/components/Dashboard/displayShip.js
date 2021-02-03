@@ -49,6 +49,8 @@ const DisplayShip = (props) => {
     const body = {
       lat: shipsData['Latitude'][shipid],
       long: shipsData['Longitude'][shipid],
+      satellite: true,
+      shipid: shipid,
     };
     const config = {
       headers: {

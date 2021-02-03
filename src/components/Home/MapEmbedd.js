@@ -33,7 +33,7 @@ const MapEmbedd = ({
     );
     let tempArr = [];
     res.data.forEach((el) => {
-      tempArr.unshift([el['lat'], el['long']]);
+      tempArr.unshift([el['lat'], el['long'], el['satellite'], el['shipid']]);
     });
     setThreatPoints(tempArr);
     setDataLoaded(true);
@@ -47,7 +47,6 @@ const MapEmbedd = ({
           google={google}
           mapType='satellite'
           zoom={activeZoom}
-          onClick={() => console.log('map clicked')}
           initialCenter={{
             lat: initLat,
             lng: intiLng,
@@ -62,19 +61,16 @@ const MapEmbedd = ({
               return (
                 <Marker
                   key={index}
-                  // onClick={() => {
-                  //   history.push(`/shipdetails/${sati[0]}/${sati[1]}`);
-                  //   window.location.reload(false);
-                  //   // rerenderDashbaord();
-                  // }}
-                  // icon={{
-                  //   path: google.maps.SymbolPath.CIRCLE,
-                  //   fillColor: 'yellow',
-                  //   strokeColor: 'yellow',
-                  //   strokeWeight: 1,
-                  //   fillOpacity: 0.5,
-                  //   scale: 4,
-                  // }}
+                  onClick={() => {
+                    {
+                      sati[2] === true
+                        ? history.push(`/shipdetails/${sati[3]}`)
+                        : history.push(`/shipdetails/${sati[0]}/${sati[1]}`);
+                    }
+                    console.log(sati[3]);
+                    window.location.reload(false);
+                    // rerenderDashbaord();
+                  }}
                   position={{
                     lat: sati[0],
                     lng: sati[1],
@@ -113,6 +109,7 @@ const MapEmbedd = ({
               <Marker
                 key={index}
                 onClick={() => {
+                  // console.log(shipid);
                   history.push(`/shipdetails/${shipid}`);
                   window.location.reload(false);
                   // rerenderDashbaord();

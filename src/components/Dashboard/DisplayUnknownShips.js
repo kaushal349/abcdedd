@@ -51,6 +51,7 @@ const DisplayUnknownShips = (props) => {
     const body = {
       lat: latProp,
       long: lngProp,
+      satellite: false,
     };
     const config = {
       headers: {

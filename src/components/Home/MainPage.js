@@ -9,7 +9,7 @@ import DisplayUnknownShips from '../Dashboard/DisplayUnknownShips';
 
 const MainPage = () => {
   const [satelliteFeed, setSatelliteFeed] = useState(true);
-  const [threatFeed, setThreatFeed] = useState(false);
+  const [threatFeed, setThreatFeed] = useState(true);
   const [activeZoom, setActiveZoom] = useState(10);
   const [initLat, setInitLat] = useState(1.30415);
   const [intiLng, setInitLng] = useState(103.86066);
@@ -67,12 +67,12 @@ const MainPage = () => {
             </div> */}
           {/* </div> */}
           <Form>
-            <Form.Row className='align-items-center px-5 pt-2'>
+            <Form.Row className='align-items-center px-5 pt-2 bg-dark'>
               <Col xs='auto'>
                 <Form.Check
                   type='checkbox'
                   id='autoSizingCheck'
-                  className='mb-2'
+                  className='mb-2 font-weight-bold text-danger'
                   label='Satellite feed'
                   checked={satelliteFeed}
                   onChange={() => {
@@ -84,12 +84,20 @@ const MainPage = () => {
                 <Form.Check
                   type='checkbox'
                   id='autoSizingCheck'
-                  className='mb-2'
+                  className='mb-2 font-weight-bold text-danger'
                   label='Threat feed'
                   checked={threatFeed}
                   onChange={() => {
                     setThreatFeed(!threatFeed);
                   }}
+                />
+              </Col>
+              <Col xs='auto' className='ml-4'>
+                <Form.Check
+                  type='checkbox'
+                  id='autoSizingCheck'
+                  className='mb-2 font-weight-bold text-danger'
+                  label='Show past track'
                 />
               </Col>
             </Form.Row>
